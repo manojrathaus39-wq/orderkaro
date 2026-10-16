@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Order Karo</title>
+<style>
+body{font-family:Arial;margin:0;background:#eee}
+.header{background:#ff3f6c;color:#fff;padding:15px;text-align:center;font-weight:bold;font-size:20px}
+.search{padding:15px;text-align:center}
+.search input{width:85%;padding:12px;border-radius:20px;border:1px solid #ccc}
+.card{background:#fff;margin:10px;padding:12px;border-radius:10px}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.box{border:1px solid #ddd;padding:8px;border-radius:8px;text-align:center}
+.best{border:2px solid green;background:#eaffea}
+.btn{display:block;background:#ff3f6c;color:#fff;padding:6px;text-decoration:none;border-radius:5px;margin-top:5px}
+</style></head><body>
+<div class="header">ORDER KARO - Best Price Finder</div>
+<div class="search"><input id="s" placeholder="Search T-shirt, Jeans..." onkeyup="filter()"></div>
+<div id="list"></div>
+<script>
+let data=[
+{name:"Roadster T-Shirt",img:"https://via.placeholder.com/300",prices:[{s:"Myntra",p:359,l:"https://myntr.it/rie5AIf"},{s:"Ajio",p:329,l:"https://myntr.it/rie5AIf"},{s:"Flipkart",p:399,l:"https://myntr.it/rie5AIf"},{s:"Shopsy",p:349,l:"https://myntr.it/rie5AIf"}]},
+{name:"Levis Jeans",img:"https://via.placeholder.com/300",prices:[{s:"Myntra",p:1999,l:"https://myntr.it/rie5AIf"},{s:"Ajio",p:1899,l:"https://myntr.it/rie5AIf"},{s:"Flipkart",p:2199,l:"https://myntr.it/rie5AIf"},{s:"Shopsy",p:2099,l:"https://myntr.it/rie5AIf"}]}
+];
+function render(d){
+let h="";d.forEach(x=>{
+let m=Math.min(...x.prices.map(o=>o.p));
+h+=`<div class="card"><img src="${x.img}" width="100%"><h3>${x.name}</h3><div class="price-grid">`;
+x.prices.forEach(o=>{
+h+=`<div class="box ${o.p==m?'best':''}"><b>${o.s}</b><br>Rs.${o.p}${o.p==m?'<br><small>BEST DEAL</small>':''}<a class="btn" href="${o.l}" target="_blank">Buy Now</a></div>`;
+});
+h+=`</div></div>`;
+});
+document.getElementById("list").innerHTML=h;
+}
+function filter(){let q=document.getElementById("s").value.toLowerCase();render(data.filter(x=>x.name.toLowerCase().includes(q)))}
+render(data);
+</script></body></html>
